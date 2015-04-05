@@ -14,20 +14,29 @@ angular.module('resume').controller('ResumeController', ['$scope',
 			{
 				'name':'Western Washington University',
 				'degree':'M.S. Computer Science',
-				'graduated':'March 2016',
+				'graduated':'March 2016 (Expected)',
 				'gpa':'4.0',
 				'complete':false
 			}];
 
 		$scope.jobs = [
 			{
-				'company':'Code Lily',
+				'company':'CodeLily',
 				'title':'Co-Founder',
 				'location':'Bellingham, WA',
 				'dates':'Nov 2014 - Present',
 				'info':[
 					'We are building a computer science and web development education service (A coding bootcamp).',
 					'We believe employees who feel undervalued and kids preparing for college all need access to great computer science education.'
+				]
+			},
+			{
+				'company':'WompMobile',
+				'title':'Production Developer',
+				'location':'Bellingham, WA',
+				'dates':'March 2015 - Present',
+				'info':[
+					'Convert desktop websites to adaptive mobile friendly sites using HTML, CSS, and JavaScript.'
 				]
 			},
 			{
@@ -109,6 +118,10 @@ angular.module('resume').controller('ResumeController', ['$scope',
 		];
 
 		$scope.awards = [
+			{
+				'name':'Technology Alliance Group (NW): Nominee for 2014 Tech Influencer',
+				'date':'Dec 2014'
+			},
 			{
 				'name':'WWU Computer Science Citizenship Award',
 				'date':'June 2014'

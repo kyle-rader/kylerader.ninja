@@ -24,7 +24,7 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 			                .transitionDuration(500)
 											.height(600)
 			                .color(d3.scale.category10().range())
-											.size(1);
+											.size(2).sizeRange([50,50]);
 
 			  //Configure how the tooltip looks.
 			  chart.tooltipContent(function(key) {

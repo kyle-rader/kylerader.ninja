@@ -2,7 +2,8 @@
 
 angular.module('machine-learning').controller('MlController', ['$scope',
 	function($scope) {
-		// Controller Logic
-		// ...
+		$scope.buildData = function() {
+			console.log('hi');
+		}
 	}
 ]);

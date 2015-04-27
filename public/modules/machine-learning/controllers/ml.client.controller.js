@@ -2,36 +2,49 @@
 
 angular.module('machine-learning').controller('MlController', ['$scope',
 	function($scope) {
-		nv.addGraph(function() {
-		  var chart = nv.models.scatterChart()
-		                .showDistX(false)    //showDist, when true, will display those little distribution lines on the axis.
-		                .showDistY(false)
-		                .transitionDuration(350)
-										.height(800)
-		                .color(d3.scale.category10().range());
 
-		  //Configure how the tooltip looks.
-		  chart.tooltipContent(function(key) {
-		      return '<h4>&nbsp;' + key + '&nbsp;</h4>';
-		  });
+		$scope.nextCluster = function() {
+			$scope.clusterStep += 1;
+			$scope.refresh();
+		}
 
-		  //Axis settings
-		  chart.xAxis.tickFormat(d3.format('.02f'));
-		  chart.yAxis.tickFormat(d3.format('.02f'));
+		$scope.nextCluster = function() {
+			$scope.clusterStep -= 1;
+			$scope.refresh();
+		}
 
-		  //We want to show shapes other than circles.
-		  chart.scatter.onlyCircles(false);
+		$scope.refresh = function() {
+			if (!$scope.dataSets || !$scope.clusterStep) return;
 
-		  var myData = randomData(4,10);
-			console.log(myData);
-		  d3.select('#chart svg')
-		      .datum(myData)
-		      .call(chart);
+			nv.addGraph(function() {
+			  var chart = nv.models.scatterChart()
+			                .showDistX(false)    //showDist, when true, will display those little distribution lines on the axis.
+			                .showDistY(false)
+			                .transitionDuration(500)
+											.height(800)
+			                .color(d3.scale.category10().range());
 
-		  nv.utils.windowResize(chart.update);
+			  //Configure how the tooltip looks.
+			  chart.tooltipContent(function(key) {
+			      return '<h4>&nbsp;' + key + '&nbsp;</h4>';
+			  });
 
-		  return chart;
-		});
+			  //Axis settings
+			  chart.xAxis.tickFormat(d3.format('.02f'));
+			  chart.yAxis.tickFormat(d3.format('.02f'));
+
+			  //We want to show shapes other than circles.
+			  chart.scatter.onlyCircles(true);
+				var step = $scope.clusterStep;
+			  d3.select('#chart svg')
+			      .datum($scope.dataSets[step])
+			      .call(chart);
+
+			  nv.utils.windowResize(chart.update);
+
+			  return chart;
+			});
+		};
 
 		/**************************************
 		 * Simple test data generator
@@ -48,11 +61,10 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 		    });
 
 		    for (var j = 0; j < points; j++) {
-					var size = Math.random();
 		      data[i].values.push({
 		        x: random()
 		      , y: random() * 7
-		      , size: 1.0 + Math.random() * .01
+		      , size: 1.0
 		      //, shape: 'circle'
 		      });
 		    }
@@ -60,7 +72,6 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 
 		  return data;
 		}
-
 
 		$scope.buildData = function() {
 			$scope.loading = undefined;
@@ -78,20 +89,30 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 
 			var rawData = parseData($scope, $scope.rawData);
 			var clusterData = parseData($scope, $scope.clusterData);
+
 			if (rawData.length !== clusterData[0].length) {
 				$scope.error = "N in the raw data does not match N in the cluster data.";
 				$scope.loading = false;
 				return;
 			}
 
-			$scope.loading = false;
-			console.log(rawData);
-			$scope.exampleData = [
-	    {
-	        "key": "Series 1",
-	        "values": rawData
-	    }];
+			var dataSets = [];
 
+			for (var cluster = 0; cluster < clusterData.length; cluster++) {
+				dataSets[cluster] = [];
+				for (var i = 0; i < clusterData[cluster].length; i++) {
+					if (dataSets[cluster][clusterData[cluster][i]] === undefined) {
+						dataSets[cluster][clusterData[cluster][i]] = {
+							key: 'Group ' + clusterData[cluster][i],
+							values: []
+						}
+					}
+					dataSets[cluster][clusterData[cluster][i]].values.push(rawData[i]);
+				}
+			}
+			console.log(dataSets);
+			$scope.loading = false;
+			$scope.dataSets = dataSets;
 		};
 
 		function parseData($scope, inputString) {

@@ -9,26 +9,44 @@
 	<div class="row">
 		<div class="col-sm-6 col-md-6">
 			<h4><strong>Step 1.</strong> Enter your <strong>raw data</strong> here:</h4>
-			<textarea name="rawInput" ng-model="rawData" autofocus autocomplete="off" placeholder="Raw data set here..." rows=5></textarea>
+1 1<br>
+9 9<br>
+1 3<br>
+2 1<br>
+2 2<br>
+3 1<br>
+3 2<br>
+3 4<br>
+5 2<br>
+5 7<br>
+6 5<br>
+7 4<br>
+7 6<br>
+7 8<br>
+8 3<br>
+8 4<br>
+10 6
+			<textarea name="rawInput" ng-model="rawData" autofocus autocomplete="on" placeholder="Raw data set here..." rows=5></textarea>
 		</div>
 		<div class="col-sm-6 col-md-6">
 			<h4><strong>Step 2.</strong> Enter your <strong>clustering data</strong> here:</h4>
-			<textarea name="clusterInput" ng-model="clusterData" autocomplete="off" placeholder="Cluster data set here..." rows=5></textarea>
+			0  1  0  0  0  0  0  0  0  1  1  1  1  1  1  1  1  <br>
+			0  1  0  0  0  0  0  0  0  1  1  1  1  1  1  1  1  <br>
+			0  1  0  0  0  0  0  0  0  1  1  1  1  1  1  1  1
+			<textarea name="clusterInput" ng-model="clusterData" autocomplete="on" placeholder="Cluster data set here..." rows=5></textarea>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-xs-12">
 			<h4><strong>Step 3.</strong></h4>
-			<button id="build-btn" class="btn btn-lg btn-default" ng-click="buildData()" ng-disabled="loading">Build charts!</button>
+			<button id="build-btn" class="btn btn-lg btn-default" ng-click="buildData()" xng-disabled="loading">Build charts!</button>
 			<hr>
 		</div>
 	</div>
 
 	<div class="row" ng-show="loading">
 		<div class="col-xs-12">
-			<h3 class="text-center">While we build enjoy this CSS</h3>
-			<br>
 			<div class='loading-animation'>
 			  <div class='bullet'></div>
 			  <div class='bullet'></div>
@@ -49,7 +67,7 @@
 
 	<div class="row">
 		<div class="col-xs-12">
-			<div ng-bind="rawDataArray"></div>
+			<div id="chart_div"></div>
 		</div>
 	</div>
 

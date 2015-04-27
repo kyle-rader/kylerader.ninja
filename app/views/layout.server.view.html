@@ -71,6 +71,7 @@
 	</script>
 
 	<!--Application JavaScript Files-->
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	{% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
 
 	{% if process.env.NODE_ENV === 'development' %}

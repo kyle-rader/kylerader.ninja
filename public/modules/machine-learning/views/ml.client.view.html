@@ -41,7 +41,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h4><strong>Step 3.</strong></h4>
-			<button id="build-btn" class="btn btn-lg btn-info" ng-click="buildData()" ng-disabled="dataSets">Build Data!</button>
+			<button id="build-btn" class="btn btn-lg btn-info" ng-click="buildData()" ng-hide="dataSets !== undefined">Build Data!</button>
 			<button id="prev-btn" class="btn btn-lg btn-default" ng-click="prevCluster()" ng-show="dataSets" ng-disabled="clusterStep < 1">Prev Cluster</button>
 			<panel ng-bind="clusterStep"></panel>
 			<button id="next-btn" class="btn btn-lg btn-default" ng-click="nextCluster()" ng-show="dataSets" ng-disabled="clusterStep >= (dataSets.length - 1)">Next Cluster</button>

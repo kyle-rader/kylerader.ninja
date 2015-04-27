@@ -5,24 +5,26 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 
 		$scope.nextCluster = function() {
 			$scope.clusterStep += 1;
-			$scope.refresh();
+			refresh();
 		}
 
-		$scope.nextCluster = function() {
+		$scope.prevCluster = function() {
 			$scope.clusterStep -= 1;
-			$scope.refresh();
+			refresh();
 		}
 
-		$scope.refresh = function() {
-			if (!$scope.dataSets || !$scope.clusterStep) return;
+		var refresh = function() {
+
+			if ($scope.dataSets === undefined || $scope.clusterStep === undefined) return;
 
 			nv.addGraph(function() {
 			  var chart = nv.models.scatterChart()
 			                .showDistX(false)    //showDist, when true, will display those little distribution lines on the axis.
 			                .showDistY(false)
 			                .transitionDuration(500)
-											.height(800)
-			                .color(d3.scale.category10().range());
+											.height(600)
+			                .color(d3.scale.category10().range())
+											.size(1);
 
 			  //Configure how the tooltip looks.
 			  chart.tooltipContent(function(key) {
@@ -48,7 +50,7 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 
 		/**************************************
 		 * Simple test data generator
-		 */
+		 *
 		function randomData(groups, points) { //# groups,# points per group
 		  var data = [],
 	      shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
@@ -71,7 +73,7 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 		  }
 
 		  return data;
-		}
+		} */
 
 		$scope.buildData = function() {
 			$scope.loading = undefined;
@@ -107,12 +109,17 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 							values: []
 						}
 					}
-					dataSets[cluster][clusterData[cluster][i]].values.push(rawData[i]);
+					dataSets[cluster][clusterData[cluster][i]].values.push({
+						x: rawData[i][0],
+						y: rawData[i][1],
+						shape: 'circle'
+					});
 				}
 			}
-			console.log(dataSets);
 			$scope.loading = false;
 			$scope.dataSets = dataSets;
+			$scope.clusterStep = 0;
+			refresh();
 		};
 
 		function parseData($scope, inputString) {

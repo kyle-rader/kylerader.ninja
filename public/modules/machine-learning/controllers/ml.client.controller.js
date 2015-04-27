@@ -48,33 +48,6 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 			});
 		};
 
-		/**************************************
-		 * Simple test data generator
-		 *
-		function randomData(groups, points) { //# groups,# points per group
-		  var data = [],
-	      shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
-	      random = d3.random.normal();
-
-		  	for (var i = 0; i < groups; i++) {
-		    data.push({
-		      key: 'Group ' + i,
-		      values: []
-		    });
-
-		    for (var j = 0; j < points; j++) {
-		      data[i].values.push({
-		        x: random()
-		      , y: random() * 7
-		      , size: 1.0
-		      //, shape: 'circle'
-		      });
-		    }
-		  }
-
-		  return data;
-		} */
-
 		$scope.buildData = function() {
 			$scope.loading = undefined;
 			$scope.error = undefined;
@@ -89,8 +62,8 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 
 			$scope.loading = true;
 
-			var rawData = parseData($scope, $scope.rawData);
-			var clusterData = parseData($scope, $scope.clusterData);
+			var rawData = parseData($scope, $scope.rawData.data);
+			var clusterData = parseData($scope, $scope.clusterData.data);
 
 			if (rawData.length !== clusterData[0].length) {
 				$scope.error = "N in the raw data does not match N in the cluster data.";
@@ -154,4 +127,55 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 			return data;
 		}
 	}
-]);
+]).directive('appFilereader', function(
+    $q
+  ) {
+    /*
+    made by elmerbulthuis@gmail.com WTFPL licensed
+    */
+    var slice = Array.prototype.slice;
+
+    return {
+      restrict: 'A',
+      require: '?ngModel',
+      link: function(scope, element, attrs, ngModel) {
+        if (!ngModel) return;
+
+        ngModel.$render = function() {}
+
+        element.bind('change', function(e) {
+          var element = e.target;
+          if(!element.value) return;
+
+          //element.disabled = true;
+          $q.all(slice.call(element.files, 0).map(readFile))
+            .then(function(values) {
+              if (element.multiple) ngModel.$setViewValue(values);
+              else ngModel.$setViewValue(values.length ? values[0] : null);
+              element.value = null;
+              element.disabled = false;
+            });
+
+          function readFile(file) {
+            var deferred = $q.defer();
+
+            var reader = new FileReader()
+            reader.onload = function(e) {
+              deferred.resolve({data: e.target.result, name: file.name});
+            }
+            reader.onerror = function(e) {
+              deferred.reject(e);
+            }
+            reader.readAsText(file);
+
+            return deferred.promise;
+          }
+
+        }); //change
+
+      } //link
+
+    }; //return
+
+  }) //appFilereader
+;

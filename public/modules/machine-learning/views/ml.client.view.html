@@ -10,31 +10,19 @@
 	<div class="row">
 		<div class="col-sm-6 col-md-6">
 			<h4><strong>Step 1.</strong> Enter your <strong>raw data</strong> here:</h4>
-1 1<br>
-9 9<br>
-1 3<br>
-2 1<br>
-2 2<br>
-3 1<br>
-3 2<br>
-3 4<br>
-5 2<br>
-5 7<br>
-6 5<br>
-7 4<br>
-7 6<br>
-7 8<br>
-8 3<br>
-8 4<br>
-10 6
-			<textarea name="rawInput" ng-model="rawData" autofocus autocomplete="on" placeholder="Raw data set here..." rows=5></textarea>
+			<input name="rawInput" type="file" ng-model="rawData" ng-show="rawData === undefined" autofocus app-filereader></input>
+			<br>
+			<div class="panel panel-success" ng-hide="rawData === undefined">
+				<div class="panel-body" ng-bind="rawData.name"></div>
+			</div>
 		</div>
 		<div class="col-sm-6 col-md-6">
 			<h4><strong>Step 2.</strong> Enter your <strong>clustering data</strong> here:</h4>
-			0  1  0  1  0  0  1  1  0  1  1  1  1  1  1  1  1  <br>
-			0  1  0  0  0  0  1  1  0  1  1  1  1  1  1  1  1  <br>
-			0  1  0  0  0  0  0  0  0  1  1  1  1  1  1  1  1
-			<textarea name="clusterInput" ng-model="clusterData" autocomplete="on" placeholder="Cluster data set here..." rows=5></textarea>
+			<input name="rawInput" type="file" ng-model="clusterData" ng-show="clusterData === undefined" autofocus app-filereader></input>
+			<br>
+			<div class="panel panel-success" ng-hide="clusterData === undefined">
+				<div class="panel-body" ng-bind="clusterData.name"></div>
+			</div>
 		</div>
 	</div>
 

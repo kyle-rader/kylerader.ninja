@@ -10,6 +10,7 @@
     "angular-bootstrap": "~0.11.2",
     "angular-ui-utils": "~0.1.1",
     "angular-ui-router": "~0.2.11",
-    "nvd3": "~1.7.1"
+    "nvd3": "~1.7.1",
+    "angularjs-nvd3-directives": "~0.0.7"
   }
 }

@@ -68,6 +68,8 @@ angular.module('machine-learning').controller('MlController', ['$scope',
 			if (rawData.length !== clusterData[0].length) {
 				$scope.error = "N in the raw data does not match N in the cluster data.";
 				$scope.loading = false;
+				$scope.rawData = undefined;
+				$scope.clusterData = undefined;
 				return;
 			}
 

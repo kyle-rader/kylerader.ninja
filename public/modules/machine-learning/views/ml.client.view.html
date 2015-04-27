@@ -7,11 +7,50 @@
 	</div>
 
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-sm-6 col-md-6">
 			<h4><strong>Step 1.</strong> Enter your <strong>raw data</strong> here:</h4>
+			<textarea name="rawInput" ng-model="rawData" autofocus autocomplete="off" placeholder="Raw data set here..." rows=5></textarea>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-sm-6 col-md-6">
 			<h4><strong>Step 2.</strong> Enter your <strong>clustering data</strong> here:</h4>
+			<textarea name="clusterInput" ng-model="clusterData" autocomplete="off" placeholder="Cluster data set here..." rows=5></textarea>
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<h4><strong>Step 3.</strong></h4>
+			<button id="build-btn" class="btn btn-lg btn-default" ng-click="buildData()" ng-disabled="loading">Build charts!</button>
+			<hr>
+		</div>
+	</div>
+
+	<div class="row" ng-show="loading">
+		<div class="col-xs-12">
+			<h3 class="text-center">While we build enjoy this CSS</h3>
+			<br>
+			<div class='loading-animation'>
+			  <div class='bullet'></div>
+			  <div class='bullet'></div>
+			  <div class='bullet'></div>
+			  <div class='bullet'></div>
+			  <div class='bullet'></div>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-show="error">
+		<div class="col-xs-12">
+			<div class="panel panel-danger">
+				<div class="panel-heading">No, no, no...</div>
+				<div class="panel-body" ng-bind="error"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div ng-bind="rawDataArray"></div>
+		</div>
+	</div>
+
 </section>

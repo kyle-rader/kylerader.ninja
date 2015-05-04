@@ -43,7 +43,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 				'company':'Western Washington University',
 				'title':'Graduate Teaching Assistant',
 				'location':'Bellingham, WA',
-				'dates':'Sept 2014 - Present',
+				'dates':'Sept 2014 - April 2015',
 				'info':[
 					'Plan, run, critique and grade labs and homework.',
 					'Intro to Robotics, Computer Programming I & II, Functional Programming and Formal Language and Automata Theory'
@@ -147,7 +147,7 @@ angular.module('resume').controller('ResumeController', ['$scope',
 		$scope.activities = [
 			{
 				'name':'WWU ACM: Director of Activities',
-				'date':'March 2013 - Present'
+				'date':'March 2013 - April 2015'
 			},
 			{
 				'name':'WWU ACM Mentor',
